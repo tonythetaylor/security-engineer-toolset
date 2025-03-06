@@ -1,0 +1,42 @@
+---
+# roles/docker_security/tasks/main.yml
+# This role applies security measures for Docker containers.
+
+- name: Ensure Docker is installed (Debian/Ubuntu)
+  apt:
+    name: docker.io
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Ensure Docker service is enabled and running
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  when: ansible_os_family == "Debian"
+
+- name: "Configure Docker daemon with security options (example: no-new-privileges)"
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "no-new-privileges": true
+      }
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Docker
+  when: ansible_os_family == "Debian"
+
+- name: Remove unused Docker images (placeholder)
+  docker_image:
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - example_old_image
+  ignore_errors: yes
+  when: ansible_os_family == "Debian"
+
+- name: Run Docker container vulnerability scanning (placeholder)
+  debug:
+    msg: "Run container vulnerability scanning tool here"

@@ -1,0 +1,9 @@
+---
+# playbooks/security-hardening.yml
+# This playbook applies security hardening measures to all hosts.
+
+- name: Apply security hardening measures
+  hosts: all
+  become: yes
+  roles:
+    - security_hardening

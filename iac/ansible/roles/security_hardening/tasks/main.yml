@@ -1,0 +1,27 @@
+---
+# tasks/main.yml
+# This role performs basic security hardening tasks.
+
+- name: Update apt cache (Debian/Ubuntu)
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Upgrade all packages (Debian/Ubuntu)
+  apt:
+    upgrade: dist
+  when: ansible_os_family == "Debian"
+
+- name: Ensure ufw is installed (Debian/Ubuntu)
+  apt:
+    name: ufw
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Enable UFW and set default deny policy (Debian/Ubuntu)
+  ufw:
+    state: enabled
+    policy: deny
+  when: ansible_os_family == "Debian"
+
+# Add further tasks here for other operating systems or additional hardening measures.

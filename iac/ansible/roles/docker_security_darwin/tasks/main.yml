@@ -1,0 +1,48 @@
+---
+# roles/docker_security_darwin/tasks/main.yml
+# This role performs security checks and configurations for Docker and system settings on macOS (Darwin).
+
+- name: Check if Docker Desktop is installed
+  stat:
+    path: /Applications/Docker.app
+  register: docker_app
+
+- name: Notify if Docker Desktop is not installed
+  debug:
+    msg: "Docker Desktop is not installed. Please install Docker Desktop for macOS."
+  when: not docker_app.stat.exists
+
+- name: Ensure Docker Desktop is running
+  shell: "pgrep -f 'Docker.app' || echo 'Docker not running'"
+  register: docker_running
+  changed_when: false
+
+- name: Display Docker running status
+  debug:
+    msg: "Docker Desktop is running."
+  when: docker_running.stdout != "Docker not running"
+
+- name: Enable macOS firewall (if not already enabled)
+  command: /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+  register: firewall_result
+  changed_when: "'Enabled' in firewall_result.stdout"
+  ignore_errors: yes
+
+- name: Check macOS firewall status
+  command: /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
+  register: firewall_status
+  changed_when: false
+
+- name: Display firewall status
+  debug:
+    msg: "macOS firewall status: {{ firewall_status.stdout }}"
+
+- name: Check System Integrity Protection (SIP) status
+  command: csrutil status
+  register: sip_status
+  changed_when: false
+  ignore_errors: yes
+
+- name: Display SIP status
+  debug:
+    msg: "System Integrity Protection status: {{ sip_status.stdout }}"

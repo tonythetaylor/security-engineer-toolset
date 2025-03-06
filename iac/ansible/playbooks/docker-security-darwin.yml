@@ -1,0 +1,9 @@
+---
+# playbooks/docker-security-darwin.yml
+# This playbook applies Docker and system security checks specific to macOS (Darwin).
+
+- name: Apply Docker and security settings for macOS
+  hosts: all
+  # become: yes
+  roles:
+    - docker_security_darwin

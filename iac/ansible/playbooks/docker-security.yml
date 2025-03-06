@@ -1,0 +1,9 @@
+---
+# playbooks/docker-security.yml
+# This playbook applies security measures for Docker containers.
+
+- name: Apply Docker container security measures
+  hosts: all
+  # become: yes
+  roles:
+    - docker_security

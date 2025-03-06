@@ -1,0 +1,9 @@
+---
+# playbooks/compliance-checks.yml
+# This playbook applies compliance checks and security hardening measures.
+
+- name: Apply system compliance checks
+  hosts: all
+  # become: yes
+  roles:
+    - compliance_checks

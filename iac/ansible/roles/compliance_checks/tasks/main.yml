@@ -1,0 +1,107 @@
+---
+# roles/compliance_checks/tasks/main.yml
+# This role applies security compliance checks and enforcements.
+
+- name: Ensure system packages are up-to-date (Debian/Ubuntu)
+  apt:
+    update_cache: yes
+    upgrade: dist
+  when: ansible_os_family == "Debian"
+
+- name: Ensure system packages are up-to-date (RHEL/CentOS)
+  yum:
+    name: "*"
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure password policies are enforced (Linux)
+  lineinfile:
+    path: /etc/login.defs
+    regexp: "^PASS_MAX_DAYS"
+    line: "PASS_MAX_DAYS 90"
+  when: ansible_os_family in ["Debian", "RedHat"]
+
+- name: Disable root login via SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+  notify: Restart SSH
+  when: ansible_os_family in ["Debian", "RedHat"]
+
+- name: Ensure firewall is enabled (Debian/Ubuntu)
+  ufw:
+    state: enabled
+  when: ansible_os_family == "Debian"
+
+- name: Ensure firewall is enabled (RHEL/CentOS)
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  when: ansible_os_family == "RedHat"
+
+- name: "Remove unnecessary services (example: telnet)"
+  package:
+    name: telnet
+    state: absent
+  when: ansible_os_family in ["Debian", "RedHat"]
+
+  ## FILE INTEGRITY MONITORING (AIDE)
+- name: Install AIDE for file integrity monitoring
+  package:
+    name: aide
+    state: present
+  when: ansible_os_family in ["Debian", "RedHat"]
+
+- name: Copy AIDE configuration file
+  copy:
+    src: aide.conf
+    dest: /etc/aide.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Initialize AIDE Database
+
+## AUDIT LOGGING (auditd)
+- name: Install auditd for audit logging
+  package:
+    name: auditd
+    state: present
+  when: ansible_os_family in ["Debian", "RedHat"]
+
+- name: Deploy audit rules from template
+  template:
+    src: audit.rules.j2
+    dest: /etc/audit/rules.d/audit.rules
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart auditd
+
+## ENFORCING ENCRYPTION POLICIES
+- name: Ensure strong SSH encryption settings
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?Ciphers"
+    line: "Ciphers aes256-ctr,aes192-ctr,aes128-ctr"
+  notify: Restart SSH
+
+- name: Ensure Apache uses secure TLS settings (if installed)
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "^SSLProtocol"
+    line: "SSLProtocol all -SSLv2 -SSLv3"
+  when: ansible_os_family == "RedHat"
+
+## AUTOMATED COMPLIANCE REPORTING
+- name: Generate compliance report
+  shell: |
+    echo "==== Compliance Report ====" > /var/log/compliance_report.log
+    echo "AIDE Status:" >> /var/log/compliance_report.log
+    aide --check >> /var/log/compliance_report.log 2>&1
+    echo "Audit Log Events:" >> /var/log/compliance_report.log
+    auditctl -l >> /var/log/compliance_report.log 2>&1
+    echo "TLS/SSH Settings:" >> /var/log/compliance_report.log
+    grep -E '^Ciphers' /etc/ssh/sshd_config >> /var/log/compliance_report.log
+  changed_when: false
