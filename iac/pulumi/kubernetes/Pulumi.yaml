@@ -1,0 +1,3 @@
+name: pulumi-kubernetes-security
+runtime: python
+description: Pulumi automation for Kubernetes security
