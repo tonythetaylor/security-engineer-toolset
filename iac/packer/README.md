@@ -22,6 +22,7 @@ iac/packer/
 ## Getting Started
 
 ### 1️ - Install Packer
+
 Install Packer on your system:
 ```bash
 brew install packer  # macOS
@@ -60,14 +61,12 @@ packer build templates/docker-secure-image.json
 • Installs security tools like fail2ban, auditd, and automatic updates
 • Fully customizable scripts for specific security needs
 ```
-⸻
+
 
 ## Next Steps
 	•	Integrate Terraform: Deploy these images with Terraform automation.
 	•	Expand Hardening: Add CIS/NIST benchmarks to security scripts.
 	•	Automate Compliance: Build security scans into the image creation process.
-
-⸻
 
 ## Contributing
 

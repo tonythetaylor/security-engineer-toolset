@@ -82,9 +82,6 @@ ansible-playbook -i inventory playbooks/docker-security-darwin.yml --ask-become-
 ansible-playbook -i inventory playbooks/compliance-checks.yml --ask-become-pass
 ```
 
-
-⸻
-
 ## Playbooks & Roles Overview
 
 Playbook	Purpose
@@ -93,9 +90,6 @@ docker-security.yml	Security hardening for Docker containers on Linux
 docker-security-darwin.yml	Docker security tasks tailored for macOS (Darwin)
 compliance-checks.yml	Enforces compliance with CIS, NIST, file integrity, audit logging, and reporting
 
-
-
-⸻
 
 ## Extending & Customizing
 
@@ -116,15 +110,11 @@ After running compliance checks, you can review the generated compliance report:
 cat /var/log/compliance_report.log
 ```
 
-⸻
-
 ## Next Steps
 	•	AWS Security Automation: Integrate CloudFormation templates and Ansible for cloud security.
 	•	Container Security Enhancements: Extend Docker security configurations for privileged containers and secret management.
 	•	Auto-remediation: Implement workflows for auto-remediation (e.g., using AWS Lambda in conjunction with Ansible).
 	•	Centralized Monitoring: Consider integrating SIEM tools, ELK, or OpenSearch for centralized logging and alerting.
-
-⸻
 
 ## Contributing
 
