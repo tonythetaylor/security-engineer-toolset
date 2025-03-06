@@ -2,22 +2,29 @@
   "builders": [
     {
       "type": "docker",
-      "image": "ubuntu:20.04",
+      "image": "ubuntu:22.04",
       "commit": true
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "script": "../scripts/harden-linux.sh"
-    },
-    {
-      "type": "shell",
-      "script": "../scripts/install-security-tools.sh"
+      "environment_vars": [
+        "DEBIAN_FRONTEND=noninteractive"
+      ],
+      "scripts": [
+        "./scripts/harden-linux-docker.sh",
+        "./scripts/install-security-tools.sh"
+      ]
     }
   ],
   "post-processors": [
     [
+      {
+        "type": "docker-tag",
+        "repository": "secure-docker-image",
+        "tag": "v{{timestamp}}"
+      },
       {
         "type": "docker-tag",
         "repository": "secure-docker-image",
