@@ -14,3 +14,17 @@ Deploy a CloudFormation stack using the AWS CLI:
 
 ```bash
 aws cloudformation create-stack --stack-name SecureVPC --template-body file://templates/secure-vpc.yml
+
+```
+
+To update an existing stack:
+
+```bash
+aws cloudformation update-stack --stack-name SecureVPC --template-body file://iac/cloudformation/templates/secure-vpc.yml
+```
+
+To delete a stack:
+
+```bash
+aws cloudformation delete-stack --stack-name SecureVPC
+```
