@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Enables AWS CloudTrail for security auditing"
+
+Resources:
+  SecurityCloudTrail:
+    Type: AWS::CloudTrail::Trail
+    Properties:
+      TrailName: SecurityTrail
+      IsMultiRegionTrail: true
+      EnableLogFileValidation: true
+      IncludeGlobalServiceEvents: true
+      S3BucketName: !Sub "cloudtrail-logs-${AWS::AccountId}"

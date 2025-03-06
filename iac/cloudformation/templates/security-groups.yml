@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Creates a restrictive security group"
+
+Resources:
+  SecureSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Restrictive security group for SSH, HTTP, and HTTPS"
+      VpcId: !ImportValue SecureVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "203.0.113.0/32" # Replace with your IP for SSH access
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: "0.0.0.0/0"
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          CidrIp: "0.0.0.0/0"
