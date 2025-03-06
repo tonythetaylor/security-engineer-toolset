@@ -7,7 +7,7 @@ This directory contains Ansible playbooks and roles that automate security, comp
 ---
 
 ## Directory Structure
-
+```
 iac/ansible/
 ├── playbooks/                 # Playbooks for security automation
 │   ├── security-hardening.yml      # OS-level security configurations (SSH, firewalls, etc.)
@@ -23,7 +23,7 @@ iac/ansible/
 ├── inventory                  # Ansible inventory file (defines target hosts)
 ├── ansible.cfg                # Ansible configuration file
 └── README.md                  # This documentation
-
+```
 ---
 
 ## Getting Started
