@@ -1,0 +1,24 @@
+{
+  "builders": [
+    {
+      "type": "azure-arm",
+      "location": "East US",
+      "resource_group_name": "packer-resource-group",
+      "image_publisher": "Canonical",
+      "image_offer": "UbuntuServer",
+      "image_sku": "18.04-LTS",
+      "managed_image_name": "hardened-azure-image",
+      "managed_image_resource_group_name": "packer-resource-group"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "../scripts/harden-linux.sh"
+    },
+    {
+      "type": "shell",
+      "script": "../scripts/install-security-tools.sh"
+    }
+  ]
+}

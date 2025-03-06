@@ -1,0 +1,27 @@
+{
+  "variables": {
+    "aws_region": "us-east-1",
+    "ami_name": "hardened-security-ami"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `aws_region`}}",
+      "source_ami": "ami-0c55b159cbfafe1f0",
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "{{user `ami_name`}}",
+      "associate_public_ip_address": "true"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "../scripts/harden-linux.sh"
+    },
+    {
+      "type": "shell",
+      "script": "../scripts/install-security-tools.sh"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:20.04",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "../scripts/harden-linux.sh"
+    },
+    {
+      "type": "shell",
+      "script": "../scripts/install-security-tools.sh"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "secure-docker-image",
+        "tag": "latest"
+      }
+    ]
+  ]
+}
