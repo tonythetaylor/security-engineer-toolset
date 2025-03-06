@@ -118,7 +118,7 @@ cat /var/log/compliance_report.log
 
 ⸻
 
-Next Steps
+# Next Steps
 	•	AWS Security Automation: Integrate CloudFormation templates and Ansible for cloud security.
 	•	Container Security Enhancements: Extend Docker security configurations for privileged containers and secret management.
 	•	Auto-remediation: Implement workflows for auto-remediation (e.g., using AWS Lambda in conjunction with Ansible).
@@ -126,7 +126,7 @@ Next Steps
 
 ⸻
 
-Contributing
+# Contributing
 
 Contributions are welcome! If you’d like to add new roles, refine compliance policies, or extend automation workflows, please fork the repository and submit a pull request.
 
