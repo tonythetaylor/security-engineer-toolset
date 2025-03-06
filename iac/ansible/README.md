@@ -85,7 +85,7 @@ ansible-playbook -i inventory playbooks/compliance-checks.yml --ask-become-pass
 
 ⸻
 
-Playbooks & Roles Overview
+## Playbooks & Roles Overview
 
 Playbook	Purpose
 security-hardening.yml	OS-level hardening (SSH, firewall, user permissions, etc.)
@@ -97,7 +97,7 @@ compliance-checks.yml	Enforces compliance with CIS, NIST, file integrity, audit 
 
 ⸻
 
-Extending & Customizing
+## Extending & Customizing
 
 Adding New Roles
 
@@ -118,7 +118,7 @@ cat /var/log/compliance_report.log
 
 ⸻
 
-# Next Steps
+## Next Steps
 	•	AWS Security Automation: Integrate CloudFormation templates and Ansible for cloud security.
 	•	Container Security Enhancements: Extend Docker security configurations for privileged containers and secret management.
 	•	Auto-remediation: Implement workflows for auto-remediation (e.g., using AWS Lambda in conjunction with Ansible).
@@ -126,7 +126,7 @@ cat /var/log/compliance_report.log
 
 ⸻
 
-# Contributing
+## Contributing
 
 Contributions are welcome! If you’d like to add new roles, refine compliance policies, or extend automation workflows, please fork the repository and submit a pull request.
 

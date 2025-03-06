@@ -52,7 +52,7 @@ packer build templates/azure-hardened-image.json
 packer build templates/docker-secure-image.json
 ```
 
-# Features
+## Features
 
 ```
 • Automates hardened image creation for AWS, Azure, and Docker
@@ -62,14 +62,14 @@ packer build templates/docker-secure-image.json
 ```
 ⸻
 
-# Next Steps
+## Next Steps
 	•	Integrate Terraform: Deploy these images with Terraform automation.
 	•	Expand Hardening: Add CIS/NIST benchmarks to security scripts.
 	•	Automate Compliance: Build security scans into the image creation process.
 
 ⸻
 
-# Contributing
+## Contributing
 
 Contributions are welcome! Feel free to add new security scripts, templates, or enhancements.
 
