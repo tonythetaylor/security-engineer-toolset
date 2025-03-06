@@ -54,11 +54,12 @@ packer build templates/docker-secure-image.json
 
 Features
 
+```
 • Automates hardened image creation for AWS, Azure, and Docker
 • Enforces firewall & SSH security
 • Installs security tools like fail2ban, auditd, and automatic updates
 • Fully customizable scripts for specific security needs
-
+```
 ⸻
 
 Next Steps
